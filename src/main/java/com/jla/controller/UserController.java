@@ -72,8 +72,7 @@ public class UserController {
 
     /**
      * 学生注册
-     *
-     * @param user
+     * @param user 注册用户
      * @return
      */
     @RequestMapping("/regist")
@@ -91,8 +90,7 @@ public class UserController {
 
     /**
      * 老师注册
-     *
-     * @param user
+     * @param user 注册用户
      * @return
      */
     @RequestMapping("/regist2")
@@ -103,7 +101,13 @@ public class UserController {
         return MyStatus.ok("注册成功");
     }
 
-
+    /**
+     * 查询一个班级下的学生
+     * @param clazId 班级好
+     * @param num 页码
+     * @param request
+     * @return
+     */
     @RequestMapping("/allUser")
     public String clazUser(Integer clazId, String num,HttpServletRequest request){
         Integer pn=1;
@@ -121,8 +125,4 @@ public class UserController {
         return "WEB-INF/student";
     }
 
-    @RequestMapping("del")
-    public void deleUser(Integer id){
-        userService.deleUser(id);
-    }
 }
