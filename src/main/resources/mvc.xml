@@ -38,4 +38,14 @@
     <mvc:default-servlet-handler/>
     <!--异常捕获器-->
     <bean class="com.jla.resolver.MyExceptionResolver"/>
+
+    <!--shior使用注解-->
+    <aop:config/>
+
+    <bean id="lifecycleBeanPostProcessor"
+          class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
 </beans>

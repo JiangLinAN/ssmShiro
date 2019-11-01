@@ -3,6 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jla.dao.UserDAO">
+    <insert id="insertUser" keyProperty="id" keyColumn="id" useGeneratedKeys="true" parameterType="User">
+        insert into db_jla.user_jla(username, password, salt, gender, regist_time, claz_id)
+        VALUES (#{username},#{password},#{salt},#{gender},#{registTime},#{clazId})
+    </insert>
 
     <select id="queryUserByUsername" resultType="com.jla.pojo.User">
         select id, username, password, salt, gender, regist_time registTime, claz_id clazId

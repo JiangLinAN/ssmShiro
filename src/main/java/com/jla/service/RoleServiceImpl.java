@@ -17,4 +17,9 @@ public class RoleServiceImpl implements RoleService {
     public Set<String> queryAllRolenameByUsername(String username) {
         return roleDAO.queryAllRolenameByUsername(username);
     }
+
+    @Override
+    public void insertUserRole(Integer userId, Integer roleId) {
+        roleDAO.insertUserRole(userId,roleId);
+    }
 }
