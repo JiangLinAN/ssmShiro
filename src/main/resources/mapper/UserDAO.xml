@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jla.dao.UserDAO">
+
+    <select id="queryUserByUsername" resultType="com.jla.pojo.User">
+        select id, username, password, salt, gender, regist_time registTime, claz_id clazId
+        from db_jla.user_jla
+        where username=#{username}
+    </select>
+
+</mapper>

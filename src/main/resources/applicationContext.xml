@@ -1,0 +1,74 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd ">
+    <!-- 导入外部参数文件 -->
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <!-- 连接池：druid -->
+    <bean id="druid" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close">
+        <!-- 基本属性 url、user、password -->
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="maxActive" value="${jdbc.maxPoolSize}"/>
+
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="3000"/>
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+
+        <!-- 配置一个连接在池中最小空闲的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+    </bean>
+    <!--sqlSessionFactory-->
+    <bean id="sqlSessionFactroy" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="druid"/>
+        <property name="mapperLocations">
+            <array>
+                <value>classpath:/mapper/*.xml</value>
+            </array>
+        </property>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor"/>
+            </array>
+        </property>
+        <property name="typeAliasesPackage" value="com.jla.pojo"/>
+    </bean>
+    <!--MapperSanner-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactroy"/>
+        <property name="basePackage" value="com.jla.dao"/>
+    </bean>
+
+    <!-- 如下service相关配置 -->
+    <!-- 配置注解扫描：让spring去发现注解，进而实现对应的功能 -->
+    <context:component-scan base-package="com.jla">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--导入shiro-->
+    <import resource="classpath:applicationContext_shiro.xml"/>
+</beans>
