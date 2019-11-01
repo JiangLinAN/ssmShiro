@@ -8,10 +8,19 @@
         VALUES (#{username},#{password},#{salt},#{gender},#{registTime},#{clazId})
     </insert>
 
+    <delete id="deleUser">
+        delete from db_jla.user_jla where id=#{id}
+    </delete>
+
     <select id="queryUserByUsername" resultType="com.jla.pojo.User">
         select id, username, password, salt, gender, regist_time registTime, claz_id clazId
         from db_jla.user_jla
         where username=#{username}
+    </select>
+    <select id="findUserByClazId" resultType="com.jla.pojo.User">
+        select id, username, password, salt, gender, regist_time registTime, claz_id clazId
+        from db_jla.user_jla
+        where claz_id=#{clazId}
     </select>
 
 </mapper>

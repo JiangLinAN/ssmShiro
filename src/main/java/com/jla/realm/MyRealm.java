@@ -24,7 +24,6 @@ public class MyRealm extends AuthorizingRealm {
     private UserService userService;
     private RoleService roleService;
     private PermService permService;
-
     /**
      * 角色和权限查询
      * @param principals 用户凭证

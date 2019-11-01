@@ -1,5 +1,7 @@
 package com.jla.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jla.pojo.User;
 import com.jla.realm.MyRealm;
 import com.jla.service.RoleService;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 关于用户操作的controller
@@ -99,4 +103,26 @@ public class UserController {
         return MyStatus.ok("注册成功");
     }
 
+
+    @RequestMapping("/allUser")
+    public String clazUser(Integer clazId, String num,HttpServletRequest request){
+        Integer pn=1;
+        if (num!=null){
+            pn=Integer.parseInt(num);
+        }
+        if (pn<1){
+            pn=1;
+        }
+        PageHelper.startPage(pn,5);
+        List<User> users=userService.findUserByClazId(clazId);
+        PageInfo<User> pageInfo=new PageInfo<>(users);
+        request.setAttribute("clazId",clazId);
+        request.setAttribute("pageInfo",pageInfo);
+        return "WEB-INF/student";
+    }
+
+    @RequestMapping("del")
+    public void deleUser(Integer id){
+        userService.deleUser(id);
+    }
 }

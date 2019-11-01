@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -33,5 +34,15 @@ public class UserServiceImpl implements UserService {
         user.setPassword(sha256Hash.toBase64());
 
         userDAO.insertUser(user);
+    }
+
+    @Override
+    public List<User> findUserByClazId(Integer clazId) {
+        return userDAO.findUserByClazId(clazId);
+    }
+
+    @Override
+    public void deleUser(Integer id) {
+        userDAO.deleUser(id);
     }
 }

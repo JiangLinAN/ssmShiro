@@ -24,7 +24,7 @@ public class MyExceptionResolver implements HandlerExceptionResolver {
     private Map<Class,String> evMapping=new HashMap();
     private final String DEFAULT_ERROR="error";
     public MyExceptionResolver(){
-        evMapping.put(UnauthenticatedException.class,"redirect:/user/login");
+        evMapping.put(UnauthenticatedException.class,"http://localhost:8080/student04_jla_war_exploded/");
         evMapping.put(UnauthorizedException.class,"error");
         evMapping.put(IncorrectCredentialsException.class,"json:用户名或密码错误~~~~");
         evMapping.put(UnknownAccountException.class,"json:用户名或密码错误~~~~");
