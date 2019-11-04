@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jla.dao.RoleDAO">
+
+    <insert id="insertUserRole">
+        insert into db_jla.user_role_jla(user_id, role_id)
+        VALUES (#{userId},#{roleId})
+    </insert>
+
+    <select id="queryAllRolenameByUsername" resultType="java.lang.String">
+        select role_jla.rolename
+        from user_jla
+        JOIN user_role_jla ON user_jla.id = user_role_jla.user_id
+        JOIN role_jla on role_jla.id = user_role_jla.role_id
+        WHERE user_jla.username=#{username}
+    </select>
+</mapper>

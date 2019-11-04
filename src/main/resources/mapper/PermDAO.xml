@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jla.dao.PermDAO">
+
+
+    <select id="queryAllPermByUsername" resultType="java.lang.String">
+        select DISTINCT perm_jla.perm
+        from user_jla
+          JOIN user_role_jla ON user_jla.id = user_role_jla.id
+          JOIN role_jla on role_jla.id = user_role_jla.id
+          JOIN role_perm_jla ON role_jla.id = role_perm_jla.role_id
+          JOIN perm_jla ON role_perm_jla.perm_id = perm_jla.id
+        WHERE user_jla.username=#{username}
+    </select>
+</mapper>
